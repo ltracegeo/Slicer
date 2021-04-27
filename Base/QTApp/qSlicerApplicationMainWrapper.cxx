@@ -24,11 +24,16 @@
 #if defined (_WIN32) && !defined (Slicer_BUILD_WIN32_CONSOLE)
 # include <windows.h>
 # include <vtksys/Encoding.hxx>
+# include<shobjidl_core.h>
 
 int __stdcall WinMain(HINSTANCE hInstance,
                       HINSTANCE hPrevInstance,
                       LPSTR lpCmdLine, int nShowCmd)
 {
+  // set AppUserModelID to group Slicer windows under the same icon on the taskbar.
+  #define AUMID Slicer_ORGANIZATION_NAME "." Slicer_MAIN_PROJECT_APPLICATION_NAME "." Slicer_MAIN_PROJECT_VERSION_FULL
+  SetCurrentProcessExplicitAppUserModelID(vtksys::Encoding::ToWide(AUMID).c_str());
+
   Q_UNUSED(hInstance);
   Q_UNUSED(hPrevInstance);
   Q_UNUSED(nShowCmd);
