@@ -412,14 +412,15 @@ if(CPACK_GENERATOR STREQUAL "NSIS")
   slicer_verbose_set(CPACK_NSIS_INSTALLED_ICON_NAME "${app_name}.exe")
   slicer_verbose_set(CPACK_NSIS_MUI_FINISHPAGE_RUN "../${APPLICATION_NAME}.exe")
   # Set AppID for the shortcut
+  # Set AppID and UUID for the shortcut. This is important for windows taskbar to connect the shortcut to the various
+  # running processes of the application, grouping the icons on the same button.
   set(CPACK_NSIS_INCLUDE_SHORTCUT_SCRIPT "\\\"${Slicer_SOURCE_DIR}/CMake/SlicerCPackShortcutHelper.nsh\\\"")
   STRING(REPLACE "/" "\\\\" CPACK_NSIS_INCLUDE_SHORTCUT_SCRIPT  ${CPACK_NSIS_INCLUDE_SHORTCUT_SCRIPT} )
-  # Random CLSID generated with uuidgen.exe
+
   set(CPACK_NSIS_CREATE_ICONS_EXTRA
     "  !include ${CPACK_NSIS_INCLUDE_SHORTCUT_SCRIPT}
   !insertmacro ShortcutSetAppID \\\"$SMPROGRAMS\\\\$STARTMENU_FOLDER\\\\${PACKAGE_APPLICATION_NAME}.lnk\\\"\
- \\\"{066519E1-76BE-4EE0-B1FF-B5650EB23BC9}\\\"\
- \\\"${Slicer_ORGANIZATION_NAME}.${APPLICATION_NAME}.${Slicer_MAIN_PROJECT_VERSION_FULL}\\\"
+ \\\"{${Slicer_MD5_UUID}}\\\" \\\"${Slicer_WIN32_APP_USER_MODEL_ID}\\\"
 ")
 
 
