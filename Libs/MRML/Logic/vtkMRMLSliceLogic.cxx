@@ -1844,7 +1844,9 @@ void vtkMRMLSliceLogic::ResizeSliceNode(double newWidth, double newHeight)
   newFOV[2] = this->SliceSpacing[2] * oldDimensions[2];
   double windowAspect = (newWidth != 0. ? newHeight / newWidth : 1.);
   double planeAspect = (newFOV[0] != 0. ? newFOV[1] / newFOV[0] : 1.);
-  if (windowAspect != planeAspect)
+  double oldWindowAspect = (oldDimensions[0] != 0. ? oldDimensions[1] / oldDimensions[0] : 1.);
+  double oldPlaneAspect = (oldFOV[0] != 0. ? oldFOV[1] / oldFOV[0] : 1.);
+  if (windowAspect != planeAspect && oldWindowAspect == oldPlaneAspect)
     {
     newFOV[0] = (windowAspect != 0. ? newFOV[1] / windowAspect : newFOV[0]);
     }
