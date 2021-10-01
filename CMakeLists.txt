@@ -329,7 +329,7 @@ mark_as_advanced(Slicer_FORCED_WC_LAST_CHANGED_DATE)
 mark_as_superbuild(Slicer_FORCED_WC_LAST_CHANGED_DATE)
 
 
-set(Slicer_FORCED_REVISION "29402" CACHE STRING "Overwrite value of automatically set Slicer_REVISION" FORCE)
+set(Slicer_FORCED_REVISION "29738" CACHE STRING "Overwrite value of automatically set Slicer_REVISION" FORCE)
 mark_as_advanced(Slicer_FORCED_REVISION)
 mark_as_superbuild(Slicer_FORCED_REVISION)
 
