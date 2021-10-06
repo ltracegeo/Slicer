@@ -793,7 +793,7 @@ class SegmentEditorThresholdEffect(AbstractScriptedSegmentEditorEffect):
         if sourceVolumeNode == foregroundVolumeNode:
             return foregroundLogic
 
-        logging.warning("Source volume is not set as either the foreground or background")
+        #logging.warning("Source volume is not set as either the foreground or background")
 
         foregroundOpacity = 0.0
         if foregroundVolumeNode:
