@@ -172,6 +172,7 @@ public:
     ActionSetCrosshairPosition = 2048, /* adjust cursor position in crosshair node as mouse is moved */
     ActionTranslateSliceIntersection = 4096,
     ActionRotateSliceIntersection = 8192,
+    ActionTranslateYOnly = 16384,
     ActionAll = ActionTranslate | ActionZoom | ActionRotate | ActionBlend
     | ActionBrowseSlice | ActionShowSlice | ActionAdjustLightbox | ActionSelectVolume
     | ActionSetCursorPosition | ActionSetCrosshairPosition

@@ -1406,7 +1406,9 @@ bool vtkMRMLSliceIntersectionWidget::ProcessTranslateSlice(vtkMRMLInteractionEve
 
   // account for zoom using XYToSlice matrix
   vtkMatrix4x4* xyToSlice = sliceNode->GetXYToSlice();
-  double deltaX = xyToSlice->GetElement(0, 0)*(this->PreviousEventPosition[0] - eventPosition[0]);
+  double deltaX = 0;
+  if(!this->GetActionEnabled(ActionTranslateYOnly))
+    deltaX = xyToSlice->GetElement(0, 0)*(this->PreviousEventPosition[0] - eventPosition[0]);
   double deltaY = xyToSlice->GetElement(1, 1)*(this->PreviousEventPosition[1] - eventPosition[1]);
 
   sliceNode->SetSliceOrigin(xyz[0] + deltaX, xyz[1] + deltaY, 0);

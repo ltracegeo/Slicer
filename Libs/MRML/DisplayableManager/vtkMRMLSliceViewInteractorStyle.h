@@ -71,6 +71,7 @@ public:
     SetCrosshairPosition = 2048,
     TranslateSliceIntersection = 4096,
     RotateSliceIntersection = 8192,
+    TranslateYOnly = 16384,
     AllActionsMask = Translate | Zoom | Rotate | Blend | AdjustWindowLevelBackground | AdjustWindowLevelForeground
       | BrowseSlice | ShowSlice | AdjustLightbox | SelectVolume | SetCursorPosition | SetCrosshairPosition
       | TranslateSliceIntersection | RotateSliceIntersection
