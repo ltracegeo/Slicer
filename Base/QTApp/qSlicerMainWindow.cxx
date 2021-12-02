@@ -1249,7 +1249,7 @@ void qSlicerMainWindow::closeEvent(QCloseEvent *event)
     }
   d->IsClosing = true;
 
-  if (d->confirmCloseApplication())
+  if (event->isAccepted() || d->confirmCloseApplication())
     {
     // Proceed with closing the application
 
