@@ -629,6 +629,19 @@ class SegmentEditorThresholdEffect(AbstractScriptedSegmentEditorEffect):
 
         # De-select effect
         self.scriptedEffect.selectEffect("")
+        segmentID = self.scriptedEffect.parameterSetNode().GetSelectedSegmentID()
+        segmentationNode = self.scriptedEffect.parameterSetNode().GetSegmentationNode()
+        if not segmentationNode:
+          return
+        displayNode = segmentationNode.GetDisplayNode()
+        if not displayNode:
+          return
+        segmentID = self.scriptedEffect.parameterSetNode().GetSelectedSegmentID()
+
+        # Make current segment fully opaque
+        if segmentID:
+          displayNode.SetSegmentOpacity2DFill(segmentID, 1)
+          displayNode.SetSegmentOpacity2DOutline(segmentID, 1)
 
     def clearPreviewDisplay(self):
         for sliceWidget, pipeline in self.previewPipelines.items():
