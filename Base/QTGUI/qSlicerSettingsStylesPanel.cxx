@@ -104,7 +104,7 @@ void qSlicerSettingsStylesPanelPrivate::init()
 
   // Style setting
   this->populateStyles();
-  q->setCurrentStyle("Slicer");
+  q->setCurrentStyle("Dark Slicer");
   QObject::connect(this->StyleComboBox, SIGNAL(currentIndexChanged(QString)),
                    q, SLOT(onStyleChanged(QString)));
   q->registerProperty("Styles/Style", q,
@@ -127,7 +127,7 @@ int qSlicerSettingsStylesPanelPrivate
     {
     // if not found (call setCurrentStyle with a wrong style for example),
     // default to slicer's style
-    styleIndex = this->StyleComboBox->findText("Slicer", Qt::MatchFixedString);
+    styleIndex = this->StyleComboBox->findText("Dark Slicer", Qt::MatchFixedString);
     }
   return styleIndex;
 }
@@ -307,7 +307,7 @@ void qSlicerSettingsStylesPanel::onStyleChanged(const QString& newStyleName)
     {
     qWarning() << "Style named " << newStyleName << " not found !"
                <<" Defaulting to Slicer's style.";
-    this->setCurrentStyle("Slicer");
+    this->setCurrentStyle("Dark Slicer");
     return;
     }
 
