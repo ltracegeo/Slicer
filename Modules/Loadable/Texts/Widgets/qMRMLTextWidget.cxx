@@ -230,11 +230,19 @@ void qMRMLTextWidget::updateWidgetFromMRML()
   else if (updateText)
     {
     int position = d->TextEdit->textCursor().position();
-    std::string text;
+    std::stringstream ss;
     if (d->CurrentTextNode)
       {
-      text = d->CurrentTextNode->GetText();
+      if (d->CurrentTextNode->GetEncoding() == VTK_ENCODING_NONE)
+        {
+        ss << "Binary (size " << d->CurrentTextNode->GetText().size() << ")";
+        }
+      else
+        {
+        ss << d->CurrentTextNode->GetText();
+        }
       }
+    std::string text{ss.str()};
     d->TextEdit->setText(text.c_str());
     d->TextNodeContentsModified = false;
     QTextCursor cursor = d->TextEdit->textCursor();

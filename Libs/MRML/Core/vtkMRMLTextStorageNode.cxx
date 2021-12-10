@@ -85,8 +85,7 @@ int vtkMRMLTextStorageNode::ReadDataInternal(vtkMRMLNode * refNode)
 
   vtkDebugMacro("ReadDataInternal: extension = " << extension.c_str());
 
-  std::ifstream inputFile;
-  inputFile.open(fullName);
+  std::ifstream inputFile{fullName, std::ios::binary};
   if (inputFile.fail())
     {
     vtkErrorMacro("vtkMRMLTextStorageNode::ReadDataInternal: Could not read file");
@@ -96,7 +95,7 @@ int vtkMRMLTextStorageNode::ReadDataInternal(vtkMRMLNode * refNode)
   std::stringstream ss;
   ss << inputFile.rdbuf();
   std::string inputString = ss.str();
-  textNode->SetText(inputString.c_str());
+  textNode->SetText(inputString);
 
   // success
   return 1;
@@ -140,8 +139,7 @@ int vtkMRMLTextStorageNode::WriteDataInternal(vtkMRMLNode * refNode)
       }
     }
 
-  std::ofstream file;
-  file.open(fullName);
+  std::ofstream file{fullName, std::ios::binary};
   file << textNode->GetText();
   this->StageWriteData(refNode);
   return true;
