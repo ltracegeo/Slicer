@@ -44,6 +44,22 @@ vtkMRMLSliceCompositeNode::vtkMRMLSliceCompositeNode()
   this->AddNodeReferenceRole(BackgroundVolumeNodeReferenceRole, BackgroundVolumeNodeReferenceMRMLAttributeName);
   this->AddNodeReferenceRole(ForegroundVolumeNodeReferenceRole, ForegroundVolumeNodeReferenceMRMLAttributeName);
   this->AddNodeReferenceRole(LabelVolumeNodeReferenceRole, LabelVolumeNodeReferenceMRMLAttributeName);
+
+  this->Compositing = 0;
+  this->ForegroundOpacity = 0.0; // start by showing only the background volume
+  this->BackgroundOpacity = 1.0; // start by showing only the background volume
+  this->LabelOpacity = 1.0; // Show the label if there is one
+  this->LinkedControl = 0;
+  this->FiducialVisibility = 1;
+  this->FiducialLabelVisibility = 1;
+  this->AnnotationSpace = vtkMRMLSliceCompositeNode::IJKAndRAS;
+  this->AnnotationMode = vtkMRMLSliceCompositeNode::All;
+  this->SliceIntersectionVisibility = 0;
+  this->DoPropagateVolumeSelection = true;
+  this->Interacting = 0;
+  this->InteractionFlags = 0;
+  this->HotLinkedControl = 0;
+  this->InteractionFlagsModifier = (unsigned int) -1;
 }
 
 //----------------------------------------------------------------------------
@@ -59,6 +75,7 @@ void vtkMRMLSliceCompositeNode::WriteXML(ostream& of, int nIndent)
   vtkMRMLWriteXMLBeginMacro(of);
   vtkMRMLWriteXMLIntMacro(compositing, Compositing);
   vtkMRMLWriteXMLFloatMacro(foregroundOpacity, ForegroundOpacity);
+  vtkMRMLWriteXMLFloatMacro(backgroundOpacity, BackgroundOpacity);
   vtkMRMLWriteXMLFloatMacro(labelOpacity, LabelOpacity);
   vtkMRMLWriteXMLIntMacro(linkedControl, LinkedControl);
   vtkMRMLWriteXMLIntMacro(hotLinkedControl, HotLinkedControl);
@@ -107,6 +124,7 @@ void vtkMRMLSliceCompositeNode::ReadXMLAttributes(const char** atts)
   vtkMRMLReadXMLBeginMacro(atts);
   vtkMRMLReadXMLIntMacro(compositing, Compositing);
   vtkMRMLReadXMLFloatMacro(foregroundOpacity, ForegroundOpacity);
+  vtkMRMLReadXMLFloatMacro(backgroundOpacity, BackgroundOpacity);
   vtkMRMLReadXMLFloatMacro(labelOpacity, LabelOpacity);
   vtkMRMLReadXMLIntMacro(linkedControl, LinkedControl);
   vtkMRMLReadXMLIntMacro(hotLinkedControl, HotLinkedControl);
@@ -130,6 +148,7 @@ void vtkMRMLSliceCompositeNode::CopyContent(vtkMRMLNode* anode, bool deepCopy/*=
   vtkMRMLCopyBeginMacro(node);
   vtkMRMLCopyIntMacro(Compositing);
   vtkMRMLCopyFloatMacro(ForegroundOpacity);
+  vtkMRMLCopyFloatMacro(BackgroundOpacity);
   vtkMRMLCopyFloatMacro(LabelOpacity);
   vtkMRMLCopyIntMacro(LinkedControl);
   vtkMRMLCopyIntMacro(HotLinkedControl);
@@ -153,6 +172,7 @@ void vtkMRMLSliceCompositeNode::PrintSelf(ostream& os, vtkIndent indent)
   vtkMRMLPrintStringMacro(LabelVolumeID);
   vtkMRMLPrintIntMacro(Compositing);
   vtkMRMLPrintFloatMacro(ForegroundOpacity);
+  vtkMRMLPrintFloatMacro(BackgroundOpacity);
   vtkMRMLPrintFloatMacro(LabelOpacity);
   vtkMRMLPrintIntMacro(LinkedControl);
   vtkMRMLPrintIntMacro(HotLinkedControl);

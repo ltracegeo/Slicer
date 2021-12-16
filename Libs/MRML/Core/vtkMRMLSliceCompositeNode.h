@@ -81,6 +81,13 @@ public:
   vtkSetMacro (ForegroundOpacity, double);
 
   ///
+  /// opacity of the Foreground for rendering over background
+  /// TODO: make this an arbitrary list of layers
+  /// TODO: make different composite types (checkerboard, etc)
+  vtkGetMacro (BackgroundOpacity, double);
+  vtkSetMacro (BackgroundOpacity, double);
+
+  ///
   /// opacity of the Label for rendering over background
   /// TODO: make this an arbitrary list of layers
   /// TODO: make different composite types (checkerboard, etc)
@@ -206,6 +213,8 @@ protected:
 
   // Cached value of last found displayable node (it is expensive to determine it)
   vtkWeakPointer<vtkMRMLSliceDisplayNode> LastFoundSliceDisplayNode;
+  double ForegroundOpacity;
+  double BackgroundOpacity;
 
   // start by showing only the background volume
   double ForegroundOpacity{ 0.0 };

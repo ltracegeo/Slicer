@@ -42,6 +42,7 @@
 #include <vtkImageData.h>
 #include <vtkImageMathematics.h>
 #include <vtkImageReslice.h>
+#include <vtkImageCanvasSource2D.h>
 #include <vtkImageThreshold.h>
 #include <vtkInformation.h>
 #include <vtkMath.h>
@@ -130,7 +131,7 @@ struct BlendPipeline
   }
 
   void AddLayers(std::deque<SliceLayerInfo>& layers, int sliceCompositing,
-    vtkAlgorithmOutput* backgroundImagePort,
+    vtkAlgorithmOutput* backgroundImagePort, double backgroundOpacity,
     vtkAlgorithmOutput* foregroundImagePort, double foregroundOpacity,
     vtkAlgorithmOutput* labelImagePort, double labelOpacity)
   {
@@ -147,7 +148,7 @@ struct BlendPipeline
       {
       if (backgroundImagePort)
         {
-        layers.emplace_back(backgroundImagePort, 1.0);
+        layers.emplace_back(backgroundImagePort, backgroundOpacity);
         }
       if (foregroundImagePort)
         {
@@ -158,7 +159,7 @@ struct BlendPipeline
       {
       if (foregroundImagePort)
         {
-        layers.emplace_back(foregroundImagePort, 1.0);
+        layers.emplace_back(foregroundImagePort, backgroundOpacity);
         }
       if (backgroundImagePort)
         {
@@ -186,8 +187,16 @@ struct BlendPipeline
       {
       layers.emplace_back(labelImagePort, labelOpacity);
       }
+    if (layers.size() == 0 && backgroundOpacity == 0)
+    {
+      this->drawing->SetScalarTypeToUnsignedChar();
+      this->drawing->SetNumberOfScalarComponents(3);
+      this->drawing->SetExtent(0, 1, 0, 1, 0, 0);
+      layers.emplace_back(this->drawing->GetOutputPort(), 1.0);
+    }
   }
 
+  vtkNew<vtkImageCanvasSource2D> drawing;
   vtkNew<vtkImageCast> AddSubForegroundCast;
   vtkNew<vtkImageCast> AddSubBackgroundCast;
   vtkNew<vtkImageMathematics> AddSubMath;
@@ -1098,11 +1107,17 @@ void vtkMRMLSliceLogic::UpdatePipeline()
     std::deque<SliceLayerInfo> layers;
     std::deque<SliceLayerInfo> layersUVW;
 
+    if (this->SliceCompositeNode->GetBackgroundOpacity() == 0){
+      backgroundImagePort = nullptr;
+      backgroundImagePortUVW = nullptr;
+    }
     this->Pipeline->AddLayers(layers, this->SliceCompositeNode->GetCompositing(),
-      backgroundImagePort, foregroundImagePort, this->SliceCompositeNode->GetForegroundOpacity(),
+      backgroundImagePort, this->SliceCompositeNode->GetBackgroundOpacity(),
+      foregroundImagePort, this->SliceCompositeNode->GetForegroundOpacity(),
       labelImagePort, this->SliceCompositeNode->GetLabelOpacity());
     this->PipelineUVW->AddLayers(layersUVW, this->SliceCompositeNode->GetCompositing(),
-      backgroundImagePortUVW, foregroundImagePortUVW, this->SliceCompositeNode->GetForegroundOpacity(),
+      backgroundImagePortUVW, this->SliceCompositeNode->GetBackgroundOpacity(),
+      foregroundImagePortUVW, this->SliceCompositeNode->GetForegroundOpacity(),
       labelImagePortUVW, this->SliceCompositeNode->GetLabelOpacity());
 
     // Check fraction changes for add/subtract pipeline
