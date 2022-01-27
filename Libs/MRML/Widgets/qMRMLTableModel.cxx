@@ -226,7 +226,7 @@ void qMRMLTableModel::updateModelFromMRML()
     setRowCount(static_cast<int>(numberOfTableRows-tableRowOffset));
     setColumnCount(static_cast<int>(numberOfTableColumns-tableColOffset));
     }
-
+  blockSignals(true);
   // Setup items for each table column
   for (vtkIdType tableCol = tableColOffset; tableCol < numberOfTableColumns; ++tableCol)
     {
@@ -364,7 +364,9 @@ void qMRMLTableModel::updateModelFromMRML()
       }
     }
   // Set row label: either simply 1, 2, ... or values of the first column
-  for (vtkIdType tableRow = tableRowOffset; tableRow < numberOfTableRows; ++tableRow)
+  vtkIdType maxRows = numberOfTableRows > 200 ? 200 : numberOfTableRows;
+  if (numberOfTableRows < 100000)
+  for (vtkIdType tableRow = tableRowOffset; tableRow < maxRows; ++tableRow)
     {
     int modelRow = static_cast<int>(tableRow - tableRowOffset);
     QString rowLabel;
@@ -385,7 +387,7 @@ void qMRMLTableModel::updateModelFromMRML()
       }
     setHeaderData(modelRow, d->Transposed ? Qt::Horizontal : Qt::Vertical, rowLabel);
     }
-
+  blockSignals(false);
   // Add tooltip text
   for (vtkIdType tableCol = tableColOffset; tableCol < numberOfTableColumns; ++tableCol)
     {
