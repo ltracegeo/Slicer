@@ -1942,11 +1942,11 @@ void vtkMRMLSliceLogic::GetSliceBounds(double sliceBounds[6])
     {
     if (sliceBounds[2*i] == LARGE_BOUNDS_NUM)
       {
-      sliceBounds[2*i] = -100;
+      sliceBounds[2*i] = 0;
       }
     if (sliceBounds[2*i+1] == SMALL_BOUNDS_NUM)
       {
-      sliceBounds[2*i+1] = 100;
+      sliceBounds[2*i+1] = 0;
       }
     }
 

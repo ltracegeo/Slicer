@@ -1333,7 +1333,30 @@ void qMRMLSliceControllerWidgetPrivate::onSliceLogicModifiedEvent()
     }
 
   bool wasBlocking = this->SliceOffsetSlider->blockSignals(true);
-  q->setSliceOffsetRange(offsetRange[0], offsetRange[1]);
+
+  // Set slice offset range to match the field of view
+  // Calculate the number of slices in the current range.
+  // Extent is between the farthest voxel centers (not voxel sides).
+  double sliceBounds[6] = {0, -1, 0, -1, 0, -1};
+  this->SliceLogic->GetLowestVolumeSliceBounds(sliceBounds, true);
+
+  const double * sliceSpacing = this->SliceLogic->GetLowestVolumeSliceSpacing();
+  Q_ASSERT(sliceSpacing);
+  double offsetResolution = sliceSpacing ? sliceSpacing[2] : 1.0;
+
+  bool singleSlice = ((sliceBounds[5] - sliceBounds[4]) < offsetResolution);
+  if (singleSlice)
+    {
+    // add one blank slice before and after the current slice to make the slider appear in the center when
+    // we are centered on the slice
+    double centerPos = (sliceBounds[4] + sliceBounds[5]) / 2.0;
+    q->setSliceOffsetRange(centerPos, centerPos);
+    }
+  else
+    {
+    // there are at least two slices in the range
+    q->setSliceOffsetRange(offsetRange[0], offsetRange[1]);
+    }
   q->setSliceOffsetResolution(offsetResolution);
   this->SliceOffsetSlider->setValue(this->SliceLogic->GetSliceOffset());
   this->SliceOffsetSlider->blockSignals(wasBlocking);
