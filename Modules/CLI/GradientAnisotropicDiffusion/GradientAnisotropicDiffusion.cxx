@@ -91,6 +91,7 @@ int main( int argc, char * argv[] )
 
   try
     {
+    itk::Object::SetGlobalWarningDisplay(false);
     itk::GetImageType(inputVolume, pixelType, componentType);
 
     // This filter handles all types
@@ -132,11 +133,13 @@ int main( int argc, char * argv[] )
         std::cout << "unknown component type" << std::endl;
         break;
       }
+    itk::Object::SetGlobalWarningDisplay(true);
     }
   catch( itk::ExceptionObject & excep )
     {
     std::cerr << argv[0] << ": exception caught !" << std::endl;
     std::cerr << excep << std::endl;
+    itk::Object::SetGlobalWarningDisplay(true);
     return EXIT_FAILURE;
     }
   return EXIT_SUCCESS;
