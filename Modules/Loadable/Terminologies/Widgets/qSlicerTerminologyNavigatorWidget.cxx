@@ -31,6 +31,7 @@
 #include <qSlicerApplication.h>
 #include <qSlicerModuleManager.h>
 #include <qSlicerAbstractCoreModule.h>
+#include <qSlicerModuleSelectorToolBar.h>
 
 // VTK includes
 #include <vtkSmartPointer.h>
@@ -47,6 +48,7 @@
 #include <QSettings>
 #include <QTableWidgetItem>
 #include <QTimer>
+#include <QMainWindow>
 
 //-----------------------------------------------------------------------------
 // TerminologyInfoBundle methods
@@ -1106,7 +1108,11 @@ void qSlicerTerminologyNavigatorWidget::populateTerminologyComboBox()
 void qSlicerTerminologyNavigatorWidget::populateCategoryTable()
 {
   Q_D(qSlicerTerminologyNavigatorWidget);
-
+  QMap<QString, QString> categoryNameToEnvName;
+  categoryNameToEnvName["Image Log"] = "ImageLogEnv";
+  categoryNameToEnvName["Core"] = "CoreEnv";
+  categoryNameToEnvName["Micro CT"] = "MicroCTEnv";
+  categoryNameToEnvName["Thin Section"] = "ThinSectionEnv";
   d->tableWidget_Category->clearContents();
 
   if (d->CurrentTerminologyName.isEmpty())
@@ -1131,6 +1137,7 @@ void qSlicerTerminologyNavigatorWidget::populateCategoryTable()
   d->tableWidget_Category->setRowCount(categories.size());
   int index = 0;
   std::vector<vtkSlicerTerminologiesModuleLogic::CodeIdentifier>::iterator idIt;
+  QMainWindow* mainWindow = qSlicerApplication::application()->mainWindow();
   for (idIt=categories.begin(); idIt!=categories.end(); ++idIt, ++index)
     {
     vtkSlicerTerminologiesModuleLogic::CodeIdentifier addedCategoryId = (*idIt);
@@ -1145,6 +1152,12 @@ void qSlicerTerminologyNavigatorWidget::populateCategoryTable()
       {
       selectedItem = addedCategoryItem;
       }
+      foreach (qSlicerModuleSelectorToolBar* toolBar,
+          mainWindow->findChildren<qSlicerModuleSelectorToolBar*>())
+        {
+        if (toolBar->selectedModule() == categoryNameToEnvName[addedCategoryName])
+          selectedItem = addedCategoryItem;
+        }
     }
 
   // Select category if selection was valid and item shows up in search
