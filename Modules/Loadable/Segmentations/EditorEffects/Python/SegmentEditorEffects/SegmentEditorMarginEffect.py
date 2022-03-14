@@ -85,7 +85,6 @@ class SegmentEditorMarginEffect(AbstractScriptedSegmentEditorEffect):
         return slicer.util.mainWindow().cursor
 
     def setMRMLDefaults(self):
-        self.scriptedEffect.setParameterDefault("ApplyToAllVisibleSegments", 0)
         self.scriptedEffect.setParameterDefault("MarginSizeMm", 3)
 
     def getMarginSizePixel(self):
@@ -95,7 +94,7 @@ class SegmentEditorMarginEffect(AbstractScriptedSegmentEditorEffect):
             selectedSegmentLabelmapSpacing = selectedSegmentLabelmap.GetSpacing()
 
         marginSizeMM = abs(self.scriptedEffect.doubleParameter("MarginSizeMm"))
-        marginSizePixel = [int(math.floor(marginSizeMM / spacing)) for spacing in selectedSegmentLabelmapSpacing]
+        marginSizePixel = [(marginSizeMM / spacing)*1.0001 for spacing in selectedSegmentLabelmapSpacing]
         return marginSizePixel
 
     def updateGUIFromMRML(self):
@@ -122,7 +121,7 @@ class SegmentEditorMarginEffect(AbstractScriptedSegmentEditorEffect):
                 self.applyButton.setEnabled(False)
             else:
                 marginSizeMM = self.getMarginSizeMM()
-                self.marginSizeLabel.text = _("Actual:") + " {} x {} x {} mm ({}x{}x{} pixel)".format(*marginSizeMM, *marginSizePixel)
+                self.marginSizeLabel.text = _("Actual:") + " {} x {} x {} mm ({0:1.2f}x{1:1.2f}x{2:1.2f} pixel)".format(*marginSizeMM, *marginSizePixel)
                 self.applyButton.setEnabled(True)
         else:
             self.marginSizeLabel.text = _("Empty segment")
@@ -155,10 +154,10 @@ class SegmentEditorMarginEffect(AbstractScriptedSegmentEditorEffect):
             selectedSegmentLabelmapSpacing = selectedSegmentLabelmap.GetSpacing()
 
         marginSizePixel = self.getMarginSizePixel()
-        marginSizeMM = [abs((marginSizePixel[i]) * selectedSegmentLabelmapSpacing[i]) for i in range(3)]
+        marginSizeMM = [abs((marginSizePixel[i])*selectedSegmentLabelmapSpacing[i]) for i in range(3)]
         for i in range(3):
             if marginSizeMM[i] > 0:
-                marginSizeMM[i] = round(marginSizeMM[i], max(int(-math.floor(math.log10(marginSizeMM[i]))), 1))
+                marginSizeMM[i] = round(marginSizeMM[i], max(int(-math.floor(math.log10(marginSizeMM[i]))),1))
         return marginSizeMM
 
     def showStatusMessage(self, msg, timeoutMsec=500):
@@ -193,7 +192,7 @@ class SegmentEditorMarginEffect(AbstractScriptedSegmentEditorEffect):
         margin = vtkITK.vtkITKImageMargin()
         margin.SetInputConnection(thresh.GetOutputPort())
         margin.CalculateMarginInMMOn()
-        margin.SetOuterMarginMM(abs(marginSizeMM))
+        margin.SetOuterMarginMM(abs(marginSizeMM) * 1.0001)
         margin.Update()
 
         if marginSizeMM >= 0:
