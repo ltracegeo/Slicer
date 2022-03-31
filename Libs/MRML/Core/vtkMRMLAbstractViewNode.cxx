@@ -35,7 +35,7 @@ const char* vtkMRMLAbstractViewNode::OrientationMarkerHumanModelReferenceRole = 
 const char* vtkMRMLAbstractViewNode::ParentLayoutNodeReferenceRole = "ParentLayoutNodeRef";
 const char* vtkMRMLAbstractViewNode::InteractionNodeReferenceRole = "InteractionNodeRef";
 const int vtkMRMLAbstractViewNode::AxisLabelsCount = 6;
-static const char* DEFAULT_AXIS_LABELS[vtkMRMLAbstractViewNode::AxisLabelsCount] = {"L", "R", "P", "A", "I", "S"};
+static const char* DEFAULT_AXIS_LABELS[vtkMRMLAbstractViewNode::AxisLabelsCount] = {"X-", "X", "Y-", "Y", "Z-", "Z"};
 
 //----------------------------------------------------------------------------
 vtkMRMLAbstractViewNode::vtkMRMLAbstractViewNode()
