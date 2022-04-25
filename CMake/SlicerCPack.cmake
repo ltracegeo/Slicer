@@ -423,6 +423,9 @@ if(CPACK_GENERATOR STREQUAL "NSIS")
  \\\"{${Slicer_MD5_UUID}}\\\" \\\"${Slicer_WIN32_APP_USER_MODEL_ID}\\\"
 ")
 
+  get_property(${app_name}_CPACK_NSIS_MUI_ICON GLOBAL PROPERTY ${app_name}_WIN_ICON_FILE)
+  slicer_cpack_set("CPACK_NSIS_MUI_ICON")
+  slicer_verbose_set(CPACK_NSIS_INSTALLED_ICON_NAME "${app_name}.exe")
 
   # -------------------------------------------------------------------------
   # File extensions
