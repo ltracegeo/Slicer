@@ -32,10 +32,9 @@ vtkMRMLNodeNewMacro(vtkMRMLColorTableStorageNode);
 //----------------------------------------------------------------------------
 vtkMRMLColorTableStorageNode::vtkMRMLColorTableStorageNode()
 {
-  // When a color table file contains very large numbers then most likely
-  // it is not a valid file (probably it is some other text file and not
-  // a color table). The highest acceptable color ID is specified in MaximumColorID.
-  this->MaximumColorID = 1000000;
+  // maximum color index set to max(int32) ~ 2 Bi instead of max(int16) ~ 32K
+  // as index is stored as int32
+  this->MaximumColorID = 2147483647;
   this->DefaultWriteFileExtension = "ctbl";
 }
 
