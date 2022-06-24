@@ -45,7 +45,7 @@ endforeach()
 #-----------------------------------------------------------------------------
 if(WIN32)
   option(Slicer_BUILD_WIN32_CONSOLE "Build ${PROJECT_NAME} executable as a console app on windows (allows capturing console output)" ON)
-  option(Slicer_BUILD_WIN32_CONSOLE_LAUNCHER "Build ${PROJECT_NAME} launcher executable as a console app on windows (displays console at application start)" ON)
+  option(Slicer_BUILD_WIN32_CONSOLE_LAUNCHER "Build ${PROJECT_NAME} launcher executable as a console app on windows (displays console at application start)" OFF)
 else()
   set(Slicer_BUILD_WIN32_CONSOLE OFF)
   set(Slicer_BUILD_WIN32_CONSOLE_LAUNCHER OFF)

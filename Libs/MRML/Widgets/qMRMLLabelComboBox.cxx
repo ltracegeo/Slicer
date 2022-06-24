@@ -128,6 +128,12 @@ qMRMLLabelComboBox::qMRMLLabelComboBox(QWidget* newParent)
 qMRMLLabelComboBox::~qMRMLLabelComboBox() = default;
 
 // ----------------------------------------------------------------
+inline QDebug operator<<(QDebug dbg, const std::string& str)
+{
+    dbg.nospace() << QString::fromStdString(str);
+    return dbg.space();
+}
+
 void qMRMLLabelComboBox::printAdditionalInfo()
 {
   Q_D(qMRMLLabelComboBox);
