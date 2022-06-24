@@ -507,3 +507,29 @@ vtkLookupTable* vtkMRMLColorNode::CreateLookupTableCopy()
 
   return copiedLut;
 }
+
+//---------------------------------------------------------------------------
+int vtkMRMLColorNode::SetColorNames(const std::vector<std::string>& names) {
+  int totalNames = static_cast<int>(names.size());
+  int totalColors = this->GetLookupTable()->GetNumberOfTableValues();
+
+  if (totalNames > totalColors) {
+    vtkErrorMacro("ERROR: SetColorNames, there is more names than colors. Total names number: " << std::to_string(totalNames) << ", total color's number: " << std::to_string(totalColors));
+    return 0;
+  }
+
+  std::vector<std::string> namesCopy = names;
+  if (totalNames < totalColors) {
+    int missingNamesNumber = totalColors - totalNames;
+    for (int i=0; i < missingNamesNumber; i++) {
+        namesCopy.push_back(std::to_string(i));
+    }
+  }
+
+  this->Names.clear();
+  this->Names = namesCopy;
+  this->NamesInitialisedOn();
+  this->StorableModifiedTime.Modified();
+  this->Modified();
+  return 1;
+}

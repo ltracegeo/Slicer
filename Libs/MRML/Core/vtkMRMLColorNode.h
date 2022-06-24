@@ -204,6 +204,13 @@ public:
   /// It handles special types of lookup tables and fixes
   /// error in vtkLookupTable copy.
   virtual vtkLookupTable* CreateLookupTableCopy();
+  
+  /// Set a custom vector with the colors names.
+  /// If the vector size is smaller than the number of colors,
+  /// the missing names are set to the default name.
+  /// But an error should occur if the vector size is larger than the number of colors.  
+  int SetColorNames(const std::vector<std::string>& names);
+
 
 protected:
   vtkMRMLColorNode();
