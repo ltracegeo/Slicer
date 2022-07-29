@@ -39,10 +39,12 @@ class SlicerApplicationLogHandler(logging.Handler):
         logging.Handler.__init__(self)
         if hasattr(ctk, "ctkErrorLogLevel"):
             self.pythonToCtkLevelConverter = {
-                logging.DEBUG: ctk.ctkErrorLogLevel.Debug,
-                logging.INFO: ctk.ctkErrorLogLevel.Info,
-                logging.WARNING: ctk.ctkErrorLogLevel.Warning,
-                logging.ERROR: ctk.ctkErrorLogLevel.Error}
+                logging.DEBUG : ctk.ctkErrorLogLevel.Debug,
+                logging.INFO : ctk.ctkErrorLogLevel.Info,
+                logging.WARNING : ctk.ctkErrorLogLevel.Warning,
+                logging.ERROR : ctk.ctkErrorLogLevel.Error,
+                logging.CRITICAL : ctk.ctkErrorLogLevel.Critical,}
+
         self.origin = "Python"
         self.category = "Python"
 
@@ -75,8 +77,20 @@ def initLogging(logger):
     # We could filter out messages at INFO level or above (as they will be printed on the console anyway) by adding
     # applicationLogHandler.addFilter(_LogReverseLevelFilter(logging.INFO))
     # but then we would not log file name and line number of info, warning, and error level messages.
-    slicer.pythonApplicationLogHandler.setFormatter(logging.Formatter("%(message)s"))
+    slicer.pythonApplicationLogHandler.setFormatter(logging.Formatter('%(message)s'))
     logger.addHandler(slicer.pythonApplicationLogHandler)
+
+    # Prints WARNING message to stdout (anything on stdout will also show up in the application log)
+    consoleInfoHandler = logging.StreamHandler(sys.stdout)
+    consoleInfoHandler.setLevel(logging.WARNING)
+    # Filter messages at ERROR level or above (they will be printed on stderr)
+    consoleInfoHandler.addFilter(_LogReverseLevelFilter(logging.ERROR))
+    logger.addHandler(consoleInfoHandler)
+
+    # Prints error and critical messages to stderr (anything on stderr will also show it in the application log)
+    consoleErrorHandler = logging.StreamHandler(sys.stderr)
+    consoleErrorHandler.setLevel(logging.ERROR)
+    logger.addHandler(consoleErrorHandler)
 
     # Log debug messages from scripts by default, as they are useful for troubleshooting with users
     logger.setLevel(logging.DEBUG)
