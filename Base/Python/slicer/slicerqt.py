@@ -67,8 +67,11 @@ class SlicerApplicationLogHandler(logging.Handler):
 
 # -----------------------------------------------------------------------------
 def initLogging(logger):
-    """Initialize logging by creating log handlers and setting default log level."""
-
+    """
+    Initialize logging by creating log handlers and setting default log level.
+    """
+    # Capture warnings from warnings module
+    logging.captureWarnings(True)
     # Prints debug messages to Slicer application log.
     # Only debug level messages are logged this way, as higher level messages are printed on console
     # and all console outputs are sent automatically to the application log anyway.
