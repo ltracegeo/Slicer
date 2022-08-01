@@ -64,8 +64,30 @@ class SlicerApplicationLogHandler(logging.Handler):
         except:
             self.handleError(record)
 
+class SlicerApplicationLogHandlerCustom(logging.Handler):
+    COLORS = {
+        logging.DEBUG: qt.QColor("#0000FF"), #BLUE, 10
+        logging.INFO: qt.QColor("#009933"), #GREEN, 20
+        logging.WARNING: qt.QColor("#FFFF00"),#YELLOW, 30
+        logging.ERROR: qt.QColor("#FF0000"), #RED, 40
+        logging.CRITICAL: qt.QColor("#800080"), #PURPLE, 50
+    }
 
-# -----------------------------------------------------------------------------
+
+    def __init__(self):
+        logging.Handler.__init__(self)
+
+
+    def emit(self, record):
+        try:
+            msg = self.format(record)
+            slicer.app.pythonConsole().printMessage("\n"+msg, self.COLORS[record.levelno])
+        except:
+            self.handleError(record)
+
+
+
+#-----------------------------------------------------------------------------
 def initLogging(logger):
     """
     Initialize logging by creating log handlers and setting default log level.
@@ -83,23 +105,18 @@ def initLogging(logger):
     slicer.pythonApplicationLogHandler.setFormatter(logging.Formatter('%(message)s'))
     logger.addHandler(slicer.pythonApplicationLogHandler)
 
-    # Prints WARNING message to stdout (anything on stdout will also show up in the application log)
-    consoleInfoHandler = logging.StreamHandler(sys.stdout)
-    consoleInfoHandler.setLevel(logging.WARNING)
-    # Filter messages at ERROR level or above (they will be printed on stderr)
-    consoleInfoHandler.addFilter(_LogReverseLevelFilter(logging.ERROR))
-    logger.addHandler(consoleInfoHandler)
-
-    # Prints error and critical messages to stderr (anything on stderr will also show it in the application log)
-    consoleErrorHandler = logging.StreamHandler(sys.stderr)
-    consoleErrorHandler.setLevel(logging.ERROR)
-    logger.addHandler(consoleErrorHandler)
+    # this handler logs into the console, so logging only INFO and above levels
+    applicationLogHandler2 = SlicerApplicationLogHandlerCustom()
+    applicationLogHandler2.setLevel(logging.INFO)
+    applicationLogHandler2.setFormatter(logging.Formatter('%(message)s'))
+    logger.addHandler(applicationLogHandler2)
+    print(applicationLogHandler2)
 
     # Log debug messages from scripts by default, as they are useful for troubleshooting with users
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.NOTSET)
 
 
-# -----------------------------------------------------------------------------
+#-----------------------------------------------------------------------------
 # Set up the root logger
 #
 # We initialize the root logger because if somebody just called logging.debug(),
