@@ -1193,11 +1193,6 @@ bool vtkSlicerTerminologiesModuleLogic::LoadTerminologyFromSegmentDescriptorFile
 void vtkSlicerTerminologiesModuleLogic::LoadDefaultTerminologies()
 {
   std::string success("");
-  success = this->LoadTerminologyFromFile(this->GetModuleShareDirectory() + "/SegmentationCategoryTypeModifier-SlicerGeneralAnatomy.term.json");
-  if (success.empty())
-    {
-    vtkErrorMacro("LoadDefaultTerminologies: Failed to load terminology 'SegmentationCategoryTypeModifier-SlicerGeneralAnatomy'");
-    }
   success = this->LoadTerminologyFromFile(this->GetModuleShareDirectory() + "/SegmentationCategoryTypeModifier-DICOM-Master.term.json");
   if (success.empty())
     {

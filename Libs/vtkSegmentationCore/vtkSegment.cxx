@@ -64,9 +64,9 @@ vtkSegment::vtkSegment()
 
   this->LabelValue = 1;
 
-  // Set default terminology Tissue/Tissue from the default Slicer terminology dictionary
+  // Set default terminology Thin Section/Pores from the default GeoSlicer terminology dictionary
   this->SetTag( vtkSegment::GetTerminologyEntryTagName(),
-    "Segmentation category and type - DICOM master list~SCT^85756007^Rocks~^^~^^~Anatomic codes - DICOM master list~^^~^^|"
+    "Segmentation category and type - DICOM master list~SCT^85756010^Thin Section~SCT^4059^Pores~^^~Anatomic codes - DICOM master list~^^~^^|"
     //"Segmentation category and type - 3D Slicer General Anatomy list~SCT^85756007^Tissue~SCT^85756007^Tissue~^^~Anatomic codes - DICOM master list~^^~^^"
     );
 }
