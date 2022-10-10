@@ -213,7 +213,6 @@ protected:
 
   // Cached value of last found displayable node (it is expensive to determine it)
   vtkWeakPointer<vtkMRMLSliceDisplayNode> LastFoundSliceDisplayNode;
-  double ForegroundOpacity;
   double BackgroundOpacity;
 
   // start by showing only the background volume
