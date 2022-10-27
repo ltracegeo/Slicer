@@ -26,25 +26,61 @@ endif()
 if(NOT Slicer_USE_SYSTEM_${proj})
   set(requirements_file ${CMAKE_BINARY_DIR}/${proj}-requirements.txt)
   file(WRITE ${requirements_file} [===[
-  # [PySide2]
-  # Hashes correspond to the following packages:
-  #  - PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win_amd64.whl
-  #  - PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-abi3-manylinux1_x86_64.whl
-  #  - PySide2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-abi3-macosx_10_13_intel.whl
-  PySide2==5.15.2.1 --hash=sha256:af6b263fe63ba6dea7eaebae80aa7b291491fe66f4f0057c0aafe780cc83da9d \
-                    --hash=sha256:23886c6391ebd916e835fa1b5ae66938048504fd3a2934ae3189a96cd5ac0b46 \
-                    --hash=sha256:a9e2e6bbcb5d2ebb421e46e72244a0f4fe0943b2288115f80a863aacc1de1f06
-  # [/PySide2]
-  # [shiboken2]
-  # Hashes correspond to the following packages:
-  #  - shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-none-win_amd64.whl
-  #  - shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-abi3-manylinux1_x86_64.whl
-  #  - shiboken2-5.15.2.1-5.15.2-cp35.cp36.cp37.cp38.cp39.cp310-abi3-macosx_10_13_intel.whl
-  shiboken2==5.15.2.1 --hash=sha256:a0d0fdeb12b72c8af349b9642ccc67afd783dca449309f45e78cda50272fd6b7 \
-                      --hash=sha256:63debfcc531b6a2b4985aa9b71433d2ad3bac542acffc729cc0ecaa3854390c0 \
-                      --hash=sha256:ffd3d0ec3d508e592d7ee3885d27fee1f279a49989f734eb130f46d9501273a9
-  # [/shiboken2]
-  ]===])
+  camelot-py==0.10.1
+  cftime==1.6.0
+  chardet==5.0.0
+  cryptography==35.0.0
+  cudnn-python-wrappers==1.0.0
+  Cython==0.29.28
+  dask-image==0.4.0
+  dask[complete]==2.30.0
+  detect_delimiter==0.1.1
+  distinctipy==1.1.5
+  dlisio==0.3.5
+  edt==2.1.2
+  h5py==3.6.0
+  humanize==3.13.1
+  Jinja2==2.11.1
+  joblib==1.1.
+  lasio==0.25.1
+  loguru==0.6.0
+  markdown2==2.4.2
+  markupsafe==2.0.1
+  matplotlib==3.5.1
+  natsort==6.2.0
+  netCDF4==1.5.4
+  numba==0.56.2
+  numexpr==2.7.2
+  numpy==1.23.1
+  opencv-python-headless==4.5.5.64
+  scikit-fmm==2022.3.26 # Workaround for failed wheels bulding on porespy package install in linux
+  # openpnm is patched to https://github.com/fbordignon/OpenPNM/tree/2.8.2-fix
+  # remove the patch if https://github.com/PMEAL/OpenPNM/pull/2531 is merged and released
+  openpnm==2.8.2
+  pandas==1.4.2
+  paramiko==2.10.3
+  pathvalidate==2.5.0
+  pint==0.19.2
+  psutil==5.9.0
+  pygments==2.11.2
+  pynrrd==0.4.2
+  pyqtgraph==0.12.4
+  PySide2==5.15.2
+  pytesseract==0.3.7
+  pywin32==228 ; sys_platform == "win32"
+  pyzmq==22.3.0
+  recordtype==1.3.0
+  scikit-gstat==1.0.1
+  scikit-image==0.19.2
+  scikit-learn==1.0.2
+  scipy==1.8.1
+  sympy==1.10.1
+  tensorflow==2.8.2
+  toolz==0.11.1
+  trimesh==3.9.35
+  xarray==2022.3.0
+  zarr==2.5.0
+]===])
 
   ExternalProject_Add(${proj}
     ${${proj}_EP_ARGS}
@@ -53,7 +89,7 @@ if(NOT Slicer_USE_SYSTEM_${proj})
     BUILD_IN_SOURCE 1
     CONFIGURE_COMMAND ""
     BUILD_COMMAND ""
-    INSTALL_COMMAND ${PYTHON_EXECUTABLE} -m pip install --require-hashes -r ${requirements_file}
+    INSTALL_COMMAND ${PYTHON_EXECUTABLE} -m pip install -r ${requirements_file}
     LOG_INSTALL 1
     DEPENDS
       ${${proj}_DEPENDENCIES}
