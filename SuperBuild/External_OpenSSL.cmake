@@ -325,7 +325,7 @@ this version of visual studio [${MSVC_VERSION}]. You could either:
         set(_copy_release_directory 1)
       endif()
     elseif(DEFINED CMAKE_CONFIGURATION_TYPES)
-      set(OpenSSL_DIR ${OpenSSL_DIR}/${CMAKE_CFG_INTDIR})
+      set(OpenSSL_DIR ${OpenSSL_DIR}/$<CONFIG>)
       set(_copy_release_directory 1)
     endif()
 
