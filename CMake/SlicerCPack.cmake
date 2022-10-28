@@ -15,7 +15,7 @@ if(UNIX)
     set(CPACK_GENERATOR "DragNDrop")
   endif()
 elseif(WIN32)
-  set(CPACK_GENERATOR "NSIS")
+  set(CPACK_GENERATOR "ZIP")
 endif()
 
 # -------------------------------------------------------------------------
