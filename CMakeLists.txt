@@ -1289,7 +1289,10 @@ if(Slicer_USE_PYTHONQT)
     # the corresponding files are excluded from the compilation passing the "-x"
     # argument.
     add_custom_command(
-      COMMAND ${PYTHON_EXECUTABLE} -m compileall -q -x "[\/\\\\]test[s]?[\/\\\\]" ${_python_dir}/${PYTHON_STDLIB_SUBDIR}
+      COMMAND
+        ${PYTHON_EXECUTABLE} -m compileall -q
+        -x "[\/\\\\]test[s]?[\/\\\\]|trimesh[\/\\\\]resources[\/\\\\]templates"
+        ${_python_dir}/${PYTHON_STDLIB_SUBDIR}
       OUTPUT ${CMAKE_CURRENT_BINARY_DIR}/python_compile_stdlib_and_sitepackages_complete
       COMMENT "Compiling python stdlib and site-packages modules: ${_python_dir}/${PYTHON_STDLIB_SUBDIR}"
       VERBATIM
