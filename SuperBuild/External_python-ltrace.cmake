@@ -47,6 +47,7 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   markdown2==2.4.2
   markupsafe==2.0.1
   matplotlib==3.5.1
+  mkl==2022.2.1
   natsort==6.2.0
   netCDF4==1.5.4
   numba==0.56.2
@@ -61,7 +62,11 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   paramiko==2.10.3
   pathvalidate==2.5.0
   pint==0.19.2
+  # porespy @handle-unconnected-networks
+  git+https://github.com/Arenhart/porespy.git@handle-unconnected-networks
   psutil==5.9.0
+  # pyedt @develop
+  git+https://github.com/ltracegeo/pyedt.git@develop
   pygments==2.11.2
   pynrrd==0.4.2
   pyqtgraph==0.12.4

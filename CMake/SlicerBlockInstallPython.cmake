@@ -145,6 +145,14 @@ To create a Slicer package including python libraries, you can *NOT* provide you
     DESTINATION ${Slicer_INSTALL_ROOT}lib/Python/libs
     COMPONENT Runtime
     )
+    install(DIRECTORY "${PYTHON_DIR}/Library"
+    DESTINATION ${Slicer_INSTALL_ROOT}lib/Python/
+    COMPONENT Runtime
+    )
+    install(DIRECTORY "${PYTHON_DIR}/Scripts"
+    DESTINATION ${Slicer_INSTALL_ROOT}lib/Python/
+    COMPONENT Runtime
+    )
   endif()
 
   # installing all includes to enable package compiling via pip source install
