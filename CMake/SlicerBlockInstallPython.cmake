@@ -139,6 +139,11 @@ To create a Slicer package including python libraries, you can *NOT* provide you
 
   if(UNIX)
     set(python_include_subdir /include/python${Slicer_PYTHON_VERSION_DOT}${Slicer_PYTHON_ABIFLAGS}/)
+    # install .so libs
+    install(DIRECTORY "${PYTHON_DIR}/lib/"
+    DESTINATION ${Slicer_INSTALL_ROOT}lib/Python/lib
+    COMPONENT Runtime
+    FILES_MATCHING PATTERN "*.so*")
   elseif(WIN32)
     # installing dev libs to enable package compiling via pip source install
     install(DIRECTORY "${PYTHON_DIR}/libs/"
