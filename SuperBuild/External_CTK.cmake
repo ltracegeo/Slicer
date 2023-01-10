@@ -71,7 +71,11 @@ if(NOT DEFINED CTK_DIR AND NOT Slicer_USE_SYSTEM_${proj})
 
   ExternalProject_SetIfNotDefined(
     Slicer_${proj}_GIT_TAG
+<<<<<<< HEAD
     "f53820a4e6ebfc9649897577a6157d94833e9699"
+=======
+    "be0e1429e3fce605a49d08d6b94563920b019dff"
+>>>>>>> ENH: Backport CTK update adding support for dual-monitor layouts
     QUIET
     )
 
