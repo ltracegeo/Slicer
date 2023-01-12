@@ -107,7 +107,6 @@ void qSlicerDICOMExportDialogPrivate::init()
   // Set up tree view
   qMRMLSubjectHierarchyModel* sceneModel = (qMRMLSubjectHierarchyModel*)this->SubjectHierarchyTreeView->model();
   this->SubjectHierarchyTreeView->setMRMLScene(this->Scene);
-  this->SubjectHierarchyTreeView->expandToDepth(4);
   this->SubjectHierarchyTreeView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
   this->SubjectHierarchyTreeView->hideColumn(sceneModel->idColumn());
   this->SubjectHierarchyTreeView->hideColumn(sceneModel->visibilityColumn());

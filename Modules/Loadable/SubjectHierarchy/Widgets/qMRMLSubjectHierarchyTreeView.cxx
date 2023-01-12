@@ -709,7 +709,6 @@ void qMRMLSubjectHierarchyTreeView::setSubjectHierarchyNode(vtkMRMLSubjectHierar
 
   d->Model->setMRMLScene(scene);
   this->setRootItem(shNode->GetSceneItemID());
-  this->expandToDepth(4);
 }
 
 //------------------------------------------------------------------------------

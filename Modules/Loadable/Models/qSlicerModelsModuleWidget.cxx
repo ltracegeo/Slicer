@@ -121,7 +121,6 @@ void qSlicerModelsModuleWidget::setup()
   d->SubjectHierarchyTreeView->setColumnHidden(d->SubjectHierarchyTreeView->model()->transformColumn(), true);
   d->SubjectHierarchyTreeView->setPluginAllowlist(QStringList() << "Models" << "Folder" << "Opacity" << "Visibility");
   d->SubjectHierarchyTreeView->setSelectRoleSubMenuVisible(false);
-  d->SubjectHierarchyTreeView->expandToDepth(4);
   d->SubjectHierarchyTreeView->setEditTriggers(QAbstractItemView::DoubleClicked | QAbstractItemView::EditKeyPressed);
 
   connect( d->SubjectHierarchyTreeView, SIGNAL(currentItemsChanged(QList<vtkIdType>)),

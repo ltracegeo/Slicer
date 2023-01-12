@@ -148,7 +148,6 @@ void qMRMLTreeViewPrivate::setSceneModel(qMRMLSceneModel* newModel)
                    q, SLOT(saveTreeExpandState()));
   QObject::connect(this->SceneModel, SIGNAL(sceneUpdated()),
                    q, SLOT(loadTreeExpandState()));
-  q->expandToDepth(2);
 }
 
 //------------------------------------------------------------------------------
@@ -186,7 +185,6 @@ void qMRMLTreeViewPrivate::setSortFilterProxyModel(qMRMLSortFilterProxyModel* ne
   QObject::connect(this->SortFilterModel, SIGNAL(rowsInserted(QModelIndex,int,int)),
                    q, SLOT(onNumberOfVisibleIndexChanged()));
 
-  q->expandToDepth(2);
   q->onNumberOfVisibleIndexChanged();
 }
 
@@ -326,7 +324,6 @@ void qMRMLTreeView::setMRMLScene(vtkMRMLScene* scene)
   // only qMRMLSceneModel needs the scene, the other proxies don't care.
   d->SceneModel->setMRMLScene(scene);
   this->setRootNode(rootNode);
-  this->expandToDepth(2);
 }
 
 //------------------------------------------------------------------------------
