@@ -451,7 +451,11 @@ std::vector<vtkMRMLTableStorageNode::ColumnInfo> vtkMRMLTableStorageNode::GetCol
       {
       vtkWarningToMessageCollectionMacro(this->GetUserMessages(), "vtkMRMLTableStorageNode::GetColumnInfo",
         "Column '" << column->GetName() << "' was not found in table schema."
+<<<<<<< HEAD
         << " The column is set to default value type.");
+=======
+        << " The column is set to default value type and appended to the end of the table.");
+>>>>>>> ENH: Make table file reading/writing errors more visible to users
       }
     columnInfo.ColumnName = column->GetName();
     columnInfo.ScalarType = tableNode->GetColumnValueTypeFromSchema(columnInfo.ColumnName);
