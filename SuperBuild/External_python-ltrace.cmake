@@ -37,7 +37,6 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   detect_delimiter==0.1.1
   distinctipy==1.1.5
   dlisio==0.3.5
-  edt==2.1.2
   h5py==3.6.0
   humanize==3.13.1
   Jinja2==2.11.1
@@ -48,6 +47,7 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   markupsafe==2.0.1
   matplotlib==3.5.1
   mkl==2022.2.1
+  monailabel==0.6.0
   natsort==6.2.0
   netCDF4==1.5.4
   numba==0.56.2
@@ -55,9 +55,7 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   numpy==1.23.1
   opencv-python-headless==4.5.5.64
   scikit-fmm==2022.3.26 # Workaround for failed wheels bulding on porespy package install in linux
-  # openpnm is patched to https://github.com/fbordignon/OpenPNM/tree/2.8.2-fix
-  # remove the patch if https://github.com/PMEAL/OpenPNM/pull/2531 is merged and released
-  openpnm==2.8.2
+  openpnm==3.1.1
   pandas==1.4.2
   paramiko==2.10.3
   pathvalidate==2.5.0
@@ -68,7 +66,6 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   # pyedt @develop
   git+https://github.com/ltracegeo/pyedt.git@develop
   pygments==2.11.2
-  pynrrd==0.4.2
   pyqtgraph==0.12.4
   PySide2==5.15.2
   pytesseract==0.3.7
@@ -82,6 +79,7 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   sympy==1.10.1
   tensorflow==2.8.2
   toolz==0.11.1
+  torch==1.12.1
   trimesh==3.9.35
   xarray==2022.3.0
   zarr==2.5.0
