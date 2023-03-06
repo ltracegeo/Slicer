@@ -798,7 +798,8 @@ void qMRMLSubjectHierarchyModel::rebuildFromSubjectHierarchy()
 
   // Populate subject hierarchy with the items
   std::vector<vtkIdType> allItemIDs;
-  d->SubjectHierarchyNode->GetItemChildren(d->SubjectHierarchyNode->GetSceneItemID(), allItemIDs, true);
+  vtkIdType sceneID = d->SubjectHierarchyNode->GetSceneItemID();
+  d->SubjectHierarchyNode->GetItemChildren(sceneID, allItemIDs, true);
   for (std::vector<vtkIdType>::iterator itemIt=allItemIDs.begin(); itemIt!=allItemIDs.end(); ++itemIt)
     {
     vtkIdType itemID = (*itemIt);
@@ -814,6 +815,16 @@ void qMRMLSubjectHierarchyModel::rebuildFromSubjectHierarchy()
     // Expanded states are handled with the name column
     QStandardItem* item = this->itemFromSubjectHierarchyItem(itemID, this->nameColumn());
     this->updateItemDataFromSubjectHierarchyItem(item, itemID, this->nameColumn());
+    }
+
+  // Update scene item expanded state, too
+  if (d->SubjectHierarchyNode->GetItemExpanded(sceneID))
+    {
+    emit requestExpandItem(sceneID);
+    }
+  else
+    {
+    emit requestCollapseItem(sceneID);
     }
 
   emit subjectHierarchyUpdated();
@@ -842,7 +853,6 @@ QStandardItem* qMRMLSubjectHierarchyModel::insertSubjectHierarchyItem(vtkIdType 
   for (int col=0; col<this->columnCount(); ++col)
     {
     QStandardItem* newItem = new QStandardItem();
-    this->updateItemFromSubjectHierarchyItem(newItem, itemID, col);
     items.append(newItem);
     }
 
@@ -852,6 +862,13 @@ QStandardItem* qMRMLSubjectHierarchyModel::insertSubjectHierarchyItem(vtkIdType 
   d->RowCache[itemID] = QModelIndex();
   parent->insertRow(row, items);
   d->RowCache[itemID] = items[0]->index();
+
+  // Now that the item is in the model, update it
+  for (int col=0; col<this->columnCount(); ++col)
+    {
+    QStandardItem* newItem = items[col];
+    this->updateItemFromSubjectHierarchyItem(newItem, itemID, col);
+    }
 
   return items[0];
 }
