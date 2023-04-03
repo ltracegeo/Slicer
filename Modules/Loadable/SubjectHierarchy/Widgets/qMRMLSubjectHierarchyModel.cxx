@@ -720,6 +720,7 @@ void qMRMLSubjectHierarchyModel::rebuildFromSubjectHierarchy()
 {
   Q_D(qMRMLSubjectHierarchyModel);
 
+  emit invalidateFilter();
   d->RowCache.clear();
 
   // Enabled so it can be interacted with
@@ -842,6 +843,7 @@ QStandardItem* qMRMLSubjectHierarchyModel::insertSubjectHierarchyItem(vtkIdType 
 {
   Q_D(qMRMLSubjectHierarchyModel);
 
+  emit invalidateFilter();
   if (!parent)
     {
     // The scene is inserted individually, and the other items must always have a valid parent (if not other then the scene)
