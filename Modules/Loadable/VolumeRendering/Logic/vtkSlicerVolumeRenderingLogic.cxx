@@ -1489,46 +1489,5 @@ int vtkSlicerVolumeRenderingLogic::LoadCustomPresetsScene(const char* sceneFileP
 //---------------------------------------------------------------------------
 bool vtkSlicerVolumeRenderingLogic::SetRecommendedVolumeRenderingProperties(vtkMRMLVolumeRenderingDisplayNode* vspNode)
 {
-  if (vspNode == nullptr || vspNode->GetVolumePropertyNode() == nullptr)
-  {
-    vtkErrorMacro("SetRecommendedVolumeRenderingProperties: invalid input display or volume property node");
-    return false;
-  }
-  vtkMRMLScalarVolumeNode* volumeNode = vtkMRMLScalarVolumeNode::SafeDownCast(vspNode->GetVolumeNode());
-  if (!volumeNode || !volumeNode->GetImageData())
-  {
-    vtkErrorMacro("SetRecommendedVolumeRenderingProperties: invalid volume node");
-    return false;
-  }
-
-  if (volumeNode->IsA("vtkMRMLLabelMapVolumeNode"))
-  {
-    return false;
-  }
-
-  double* scalarRange = volumeNode->GetImageData()->GetScalarRange();
-  double scalarRangeSize = scalarRange[1] - scalarRange[0];
-
-  if (volumeNode->GetImageData()->GetScalarType() == VTK_UNSIGNED_CHAR)
-  {
-    // 8-bit grayscale image, it is probably ultrasound
-    vspNode->GetVolumePropertyNode()->Copy(this->GetPresetByName("US-Fetal"));
-    return true;
-  }
-
-  if (scalarRangeSize > 50.0 && scalarRangeSize < 1500.0 && this->GetPresetByName("MR-Default"))
-  {
-    // small dynamic range, probably MRI
-    vspNode->GetVolumePropertyNode()->Copy(this->GetPresetByName("MR-Default"));
-    return true;
-  }
-
-  if (scalarRangeSize >= 1500.0 && scalarRangeSize < 10000.0 && this->GetPresetByName("CT-Chest-Contrast-Enhanced"))
-  {
-    // larger dynamic range, probably CT
-    vspNode->GetVolumePropertyNode()->Copy(this->GetPresetByName("CT-Chest-Contrast-Enhanced"));
-    return true;
-  }
-
   return false;
 }
