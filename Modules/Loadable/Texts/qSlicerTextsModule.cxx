@@ -35,6 +35,7 @@
 // SubjectHierarchy Plugins includes
 #include "qSlicerSubjectHierarchyPluginHandler.h"
 #include "qSlicerSubjectHierarchyTextsPlugin.h"
+#include "qSlicerSubjectHierarchyLazyPlugin.h"
 
 //-----------------------------------------------------------------------------
 class qSlicerTextsModulePrivate
@@ -124,6 +125,7 @@ void qSlicerTextsModule::setup()
 
   // Register Subject Hierarchy core plugins
   qSlicerSubjectHierarchyPluginHandler::instance()->registerPlugin(new qSlicerSubjectHierarchyTextsPlugin());
+  qSlicerSubjectHierarchyPluginHandler::instance()->registerPlugin(new qSlicerSubjectHierarchyLazyPlugin());
 }
 
 //-----------------------------------------------------------------------------

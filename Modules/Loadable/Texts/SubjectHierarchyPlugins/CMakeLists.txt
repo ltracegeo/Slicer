@@ -15,10 +15,13 @@ set(${KIT}_INCLUDE_DIRECTORIES
 set(${KIT}_SRCS
   qSlicerSubjectHierarchy${MODULE_NAME}Plugin.cxx
   qSlicerSubjectHierarchy${MODULE_NAME}Plugin.h
+  qSlicerSubjectHierarchyLazyPlugin.cxx
+  qSlicerSubjectHierarchyLazyPlugin.h
   )
 
 set(${KIT}_MOC_SRCS
   qSlicerSubjectHierarchy${MODULE_NAME}Plugin.h
+  qSlicerSubjectHierarchyLazyPlugin.h
   )
 
 set(${KIT}_UI_SRCS
