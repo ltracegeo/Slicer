@@ -2604,21 +2604,8 @@ bool vtkMRMLSliceLogic::GetSliceOffsetRangeResolution(double range[2], double& r
   // Set the scale increments to match the z spacing (rotated into slice space)
   resolution = sliceSpacing ? sliceSpacing[2] : 1.0;
 
-  bool singleSlice = ((sliceBounds[5] - sliceBounds[4]) < resolution);
-  if (singleSlice)
-    {
-    // add one blank slice before and after the current slice to make the slider appear in the center when
-    // we are centered on the slice
-    double centerPos = (sliceBounds[4] + sliceBounds[5]) / 2.0;
-    range[0] = centerPos - resolution;
-    range[1] = centerPos + resolution;
-    }
-  else
-    {
-    // there are at least two slices in the range
-    range[0] = sliceBounds[4];
-    range[1] = sliceBounds[5];
-    }
+  range[0] = sliceBounds[4];
+  range[1] = sliceBounds[5];
 
   return true;
 }
