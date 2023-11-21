@@ -82,7 +82,7 @@ void qMRMLSubjectHierarchyComboBoxPrivate::init()
 
   q->forceDefault(true);
 
-  q->setDefaultText("Select subject hierarchy item");
+  q->setDefaultText("Select item");
   q->setDefaultIcon(QIcon());
   q->setSizePolicy(QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed));
 
@@ -714,7 +714,7 @@ void qMRMLSubjectHierarchyComboBox::updateComboBoxTitleAndIcon(vtkIdType selecte
       }
     else
       {
-      this->setDefaultText("Select subject hierarchy item");
+      this->setDefaultText("Select item");
       }
     this->setDefaultIcon(QIcon());
     return;

@@ -591,7 +591,7 @@ class SubjectHierarchyGenericSelfTestTest(ScriptedLoadableModuleTest):
         self.assertEqual(comboBox.sortFilterProxyModel().acceptedItemCount(shNode.GetSceneItemID()), 9)
 
         # Default text
-        self.assertEqual(comboBox.defaultText, "Select subject hierarchy item")
+        self.assertEqual(comboBox.defaultText, 'Select item')
 
         # Select node, include parent names in current item text (when collapsed)
         markupsCurve1ItemID = shNode.GetItemByName("MarkupsCurve_1")
