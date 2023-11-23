@@ -61,7 +61,7 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   pathvalidate==2.5.0
   pint==0.19.2
   # porespy @handle-unconnected-networks
-  git+https://github.com/Arenhart/porespy.git@handle-unconnected-networks
+  git+https://github.com/Arenhart/porespy.git@f79c8d7e6e49159e3826d5e4ce32981ec9b05100
   psutil==5.9.0
   # pyedt @develop
   git+https://github.com/ltracegeo/pyedt.git@develop
