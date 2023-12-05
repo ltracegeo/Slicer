@@ -1342,7 +1342,7 @@ void qMRMLSliceControllerWidgetPrivate::onSliceLogicModifiedEvent()
 
   const double * sliceSpacing = this->SliceLogic->GetLowestVolumeSliceSpacing();
   Q_ASSERT(sliceSpacing);
-  double offsetResolution = sliceSpacing ? sliceSpacing[2] : 1.0;
+  offsetResolution = sliceSpacing ? sliceSpacing[2] : 1.0;
 
   bool singleSlice = ((sliceBounds[5] - sliceBounds[4]) < offsetResolution);
   if (singleSlice)

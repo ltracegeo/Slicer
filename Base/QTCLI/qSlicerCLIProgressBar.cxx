@@ -369,7 +369,7 @@ void qSlicerCLIProgressBar::updateUiFromCommandLineModuleNode(
 
   // Update Progress
   ModuleProcessInformation* info = node->GetModuleDescription().GetProcessInformation();
-  QString statusLabelFormat = tr("%1 (%2s)");
+  QString statusLabelFormat = tr("%1 (%2 seconds elapsed)");
   switch (node->GetStatus())
     {
     case vtkMRMLCommandLineModuleNode::Cancelled:
@@ -383,7 +383,7 @@ void qSlicerCLIProgressBar::updateUiFromCommandLineModuleNode(
       d->ProgressBar->setValue(info->Progress * 100.);
       if (info->ElapsedTime != 0.)
         {
-        d->StatusLabel->setText(QString("%1 (%2 seconds elapsed)").arg(node->GetDisplayableStatusString()).arg(info->ElapsedTime, 0, 'f', 1));
+        d->StatusLabel->setText(statusLabelFormat.arg(QString::fromStdString(node->GetDisplayableStatusString())).arg(info->ElapsedTime, 0, 'f', 1));
         }
       // We keep StageProgressBar maximum at 100, because if it was set to 0
       // then the progress message would not be displayed.

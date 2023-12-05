@@ -52,8 +52,6 @@ vtkMRMLSliceCompositeNode::vtkMRMLSliceCompositeNode()
   this->LinkedControl = 0;
   this->FiducialVisibility = 1;
   this->FiducialLabelVisibility = 1;
-  this->AnnotationSpace = vtkMRMLSliceCompositeNode::IJKAndRAS;
-  this->AnnotationMode = vtkMRMLSliceCompositeNode::All;
   //this->SetSliceIntersectionVisibility(0);
   vtkMRMLSliceDisplayNode* sliceDisplayNode = this->GetSliceDisplayNode();
   if (sliceDisplayNode) sliceDisplayNode->SetIntersectingSlicesVisibility(0);
