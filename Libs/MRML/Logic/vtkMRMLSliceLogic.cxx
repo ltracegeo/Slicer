@@ -233,6 +233,7 @@ vtkMRMLSliceLogic::vtkMRMLSliceLogic()
   this->ImageDataConnection = nullptr;
   this->SliceSpacing[0] = this->SliceSpacing[1] = this->SliceSpacing[2] = 1;
   this->AddingSliceModelNodes = false;
+  this->AspectRatio = 1.0;
 }
 
 //----------------------------------------------------------------------------
@@ -1858,12 +1859,9 @@ void vtkMRMLSliceLogic::ResizeSliceNode(double newWidth, double newHeight)
   newFOV[1] = oldFOV[1];
   newFOV[2] = this->SliceSpacing[2] * oldDimensions[2];
   double windowAspect = (newWidth != 0. ? newHeight / newWidth : 1.);
-  double planeAspect = (newFOV[0] != 0. ? newFOV[1] / newFOV[0] : 1.);
-  double oldWindowAspect = (oldDimensions[0] != 0. ? oldDimensions[1] / oldDimensions[0] : 1.);
-  double oldPlaneAspect = (oldFOV[0] != 0. ? oldFOV[1] / oldFOV[0] : 1.);
-  if (windowAspect != planeAspect && oldWindowAspect == oldPlaneAspect)
+  if (windowAspect > 0.0)
     {
-    newFOV[0] = (windowAspect != 0. ? newFOV[1] / windowAspect : newFOV[0]);
+    newFOV[0] = newFOV[1] * this->AspectRatio / windowAspect;
     }
   int disabled = this->SliceNode->StartModify();
   this->SliceNode->SetDimensions(newWidth, newHeight, oldDimensions[2]);
@@ -2608,4 +2606,20 @@ bool vtkMRMLSliceLogic::GetSliceOffsetRangeResolution(double range[2], double& r
   range[1] = sliceBounds[5];
 
   return true;
+}
+
+double vtkMRMLSliceLogic::GetAspectRatio() const
+{
+  return this->AspectRatio;
+}
+
+void vtkMRMLSliceLogic::SetAspectRatio(double aspectRatio)
+{
+  if (aspectRatio <= 0)
+    {
+    vtkErrorMacro(<< "Invalid aspect ratio: " << aspectRatio);
+    return;
+    }
+  this->AspectRatio = aspectRatio;
+  this->ResizeSliceNode(this->SliceNode->GetDimensions()[0], this->SliceNode->GetDimensions()[1]);
 }

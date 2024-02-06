@@ -387,6 +387,9 @@ public:
   /// Returns false if the information cannot be determined.
   bool GetSliceOffsetRangeResolution(double range[2], double& resolution);
 
+  double GetAspectRatio() const;
+  void SetAspectRatio(double aspectRatio);
+
 protected:
 
   vtkMRMLSliceLogic();
@@ -462,6 +465,7 @@ protected:
   vtkMRMLModelDisplayNode *     SliceModelDisplayNode;
   vtkMRMLLinearTransformNode *  SliceModelTransformNode;
   double                        SliceSpacing[3];
+  double                        AspectRatio;
 
 private:
 
