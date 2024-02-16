@@ -66,7 +66,7 @@ if(NOT Slicer_USE_SYSTEM_${proj})
   # pyedt @develop
   git+https://github.com/ltracegeo/pyedt.git@develop
   pygments==2.11.2
-  pyqtgraph==0.12.4
+  git+https://github.com/ltracegeo/pyqtgraph.git@master#egg=pyqtgraph
   PySide2==5.15.2
   pytesseract==0.3.7
   pywin32==228 ; sys_platform == "win32"
