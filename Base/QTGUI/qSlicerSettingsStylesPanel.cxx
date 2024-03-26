@@ -109,7 +109,8 @@ void qSlicerSettingsStylesPanelPrivate::init()
                    q, SLOT(onStyleChanged(QString)));
   q->registerProperty("Styles/Style", q,
                       "currentStyle", SIGNAL(currentStyleChanged(QString)),
-                      qSlicerSettingsStylesPanel::tr("Current style"));
+                      qSlicerSettingsStylesPanel::tr("Current style"),
+                      ctkSettingsPanel::OptionRequireRestart);
 
   // Connect AdditionalStylePaths buttons
   QObject::connect(this->AddAdditionalStylePathButton, SIGNAL(clicked()),
