@@ -457,6 +457,8 @@ void qMRMLSegmentsModel::updateItemDataFromSegment(QStandardItem* item, QString 
     return;
     }
 
+  bool wasBlocking = this->blockSignals(true);
+
   int index = segmentation->GetSegmentIndex(segmentID.toStdString());
   item->setData(index, IndexRole);
 
@@ -508,6 +510,7 @@ void qMRMLSegmentsModel::updateItemDataFromSegment(QStandardItem* item, QString 
     if (!displayNode)
       {
       qCritical() << Q_FUNC_INFO << ": Invalid segmentation display node";
+      this->blockSignals(wasBlocking);
       return;
       }
 
@@ -561,6 +564,7 @@ void qMRMLSegmentsModel::updateItemDataFromSegment(QStandardItem* item, QString 
       item->setData(displayedOpacityStr, Qt::EditRole);
       }
     }
+    this->blockSignals(wasBlocking);
 }
 
 //------------------------------------------------------------------------------
